@@ -151,26 +151,7 @@ const Blog = () => {
             </article>
           ))}
         </div>
-
-        {/* Newsletter Signup */}
-        <div className="mt-16 text-center">
-          <div className="bg-card p-8 rounded-2xl border border-border inline-block max-w-md mx-auto">
-            <h3 className="text-2xl font-bold mb-4 gradient-text">Stay Updated</h3>
-            <p className="text-muted-foreground mb-6">
-              Subscribe to our newsletter for the latest entrepreneurship insights
-            </p>
-            <div className="flex gap-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:border-primary"
-              />
-              <button className="btn-primary">
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </section>
   );
