@@ -1,109 +1,180 @@
-import { Target, Eye, Award, Users, Lightbulb, Rocket } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card3D } from '@/components/ui/3d-card';
+import { Building, Users, Award, Globe, Target, Lightbulb, TrendingUp } from 'lucide-react';
 
-const About = () => {
-  const features = [
-    {
-      icon: Lightbulb,
-      title: "Innovation Hub",
-      description: "Fostering creative thinking and innovative solutions to real-world problems."
-    },
-    {
-      icon: Users,
-      title: "Community Building",
-      description: "Creating a vibrant ecosystem of entrepreneurs, mentors, and industry experts."
-    },
-    {
-      icon: Rocket,
-      title: "Startup Incubation",
-      description: "Providing comprehensive support from ideation to market launch."
-    },
-    {
-      icon: Award,
-      title: "Excellence Recognition",
-      description: "Celebrating and rewarding outstanding entrepreneurial achievements."
-    }
-  ];
-
+export default function About() {
   return (
-    <section id="about" className="py-20 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-orbitron font-bold mb-6 gradient-text">
-            About E-Cell GHRCEMJ
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            We are the driving force behind entrepreneurial innovation at GHRC Engineering & Management College, 
-            committed to transforming students into successful entrepreneurs.
+    <div className="container mx-auto px-4 py-20 space-y-20">
+      {/* Hero Section */}
+      <section className="text-center">
+        <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-bounce">
+          About <span className="text-primary">E-Cell</span>
+        </h1>
+        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          Empowering the next generation of entrepreneurs through innovation, mentorship, and community building.
+        </p>
+      </section>
+
+      {/* College Info */}
+      <section>
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold flex items-center gap-3">
+              <Building className="w-8 h-8 text-primary" />
+              Our College Legacy
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              Established in 2007, our institution has been a beacon of technical excellence for over 17 years. 
+              With a sprawling campus of 7 to 9 acres, state-of-the-art laboratories, and we provide an unparalleled learning environment.
+            </p>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">15+</div>
+                <div className="text-sm text-muted-foreground">Years of Excellence</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">15,000+</div>
+                <div className="text-sm text-muted-foreground">Alumni Network</div>
+              </div>
+            </div>
+          </div>
+
+          <Card3D>
+            <Card className="glass">
+              <CardContent className="p-8">
+                <div className="space-y-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center">
+                      <Award className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold">NAAC A+ Accredited</h4>
+                      <p className="text-sm text-muted-foreground">Top-tier accreditation</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center">
+                      <Globe className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold">Global Partnerships</h4>
+                      <p className="text-sm text-muted-foreground">International collaborations</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center">
+                      <TrendingUp className="w-6 h-6 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold">Good Placement Rate</h4>
+                      <p className="text-sm text-muted-foreground">Industry-ready graduates</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Card3D>
+        </div>
+      </section>
+
+      {/* E-Cell Story */}
+      <section>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">The E-Cell Story</h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            Founded in 2022, our Entrepreneurship Cell has grown from a small group of passionate students 
+            to a thriving community of innovators and entrepreneurs.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
-          {/* Mission */}
-          <div className="card-3d bg-card p-8 rounded-2xl border border-border">
-            <div className="flex items-center mb-6">
-              <Target className="text-primary mr-4" size={32} />
-              <h3 className="text-2xl font-bold text-foreground">Our Mission</h3>
-            </div>
-            <p className="text-muted-foreground leading-relaxed">
-              To create a thriving entrepreneurial ecosystem that empowers students with the knowledge, 
-              skills, and network needed to build successful businesses. We aim to bridge the gap between 
-              academic learning and real-world business challenges through practical experience and mentorship.
-            </p>
-          </div>
+        <div className="grid md:grid-cols-3 gap-8">
+          <Card3D>
+            <Card className="glass h-full">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3">
+                  <Target className="w-6 h-6 text-primary" />
+                  Mission
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  To foster entrepreneurial thinking and provide a platform for students to 
+                  transform their innovative ideas into successful ventures.
+                </p>
+              </CardContent>
+            </Card>
+          </Card3D>
 
-          {/* Vision */}
-          <div className="card-3d bg-card p-8 rounded-2xl border border-border">
-            <div className="flex items-center mb-6">
-              <Eye className="text-accent mr-4" size={32} />
-              <h3 className="text-2xl font-bold text-foreground">Our Vision</h3>
-            </div>
-            <p className="text-muted-foreground leading-relaxed">
-              To be recognized as the leading entrepreneurship cell in the region, producing innovative 
-              startups that solve pressing societal problems while creating economic value. We envision 
-              our alumni becoming successful entrepreneurs who contribute to India's growth story.
-            </p>
-          </div>
+          <Card3D>
+            <Card className="glass h-full">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3">
+                  <Lightbulb className="w-6 h-6 text-primary" />
+                  Vision
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  To be recognized as the premier entrepreneurship cell that produces 
+                  world-class entrepreneurs and innovative solutions.
+                </p>
+              </CardContent>
+            </Card>
+          </Card3D>
+
+          <Card3D>
+            <Card className="glass h-full">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-3">
+                  <Users className="w-6 h-6 text-primary" />
+                  Values
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Innovation, integrity, collaboration, and excellence drive everything 
+                  we do in building the entrepreneurial ecosystem.
+                </p>
+              </CardContent>
+            </Card>
+          </Card3D>
+        </div>
+      </section>
+
+      {/* Achievements */}
+      <section>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Achievements</h2>
+          <p className="text-lg text-muted-foreground">
+            Milestones that showcase our commitment to entrepreneurial excellence.
+          </p>
         </div>
 
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => (
-            <div 
-              key={index}
-              className="card-3d bg-card p-6 rounded-xl border border-border text-center group hover:border-primary/50 transition-all duration-300"
-            >
-              <div className="mb-4 flex justify-center">
-                <div className="p-3 bg-primary/10 rounded-full group-hover:bg-primary/20 transition-colors duration-300">
-                  <feature.icon className="text-primary" size={32} />
-                </div>
-              </div>
-              <h4 className="text-xl font-semibold text-foreground mb-3">{feature.title}</h4>
-              <p className="text-muted-foreground">{feature.description}</p>
-            </div>
+        <div className="grid md:grid-cols-2 gap-6">
+          {[
+            { number: '25+', label: 'Active Members', icon: Users },
+            { number: '2+', label: 'Events Organized', icon: Award },
+            // { number: '0', label: 'Startups Incubated', icon: TrendingUp },
+            // { number: '0', label: 'Funding Raised', icon: Target },
+          ].map((achievement, index) => (
+            <Card3D key={index}>
+              <Card className="glass text-center hover-lift">
+                <CardContent className="p-6">
+                  <achievement.icon className="w-8 h-8 text-primary mx-auto mb-4" />
+                  <div className="text-2xl font-bold text-primary mb-2">
+                    {achievement.number}
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    {achievement.label}
+                  </div>
+                </CardContent>
+              </Card>
+            </Card3D>
           ))}
         </div>
-
-        {/* Impact Section */}
-        <div className="mt-20 text-center">
-          <h3 className="text-3xl font-bold mb-8 gradient-text">Our Impact</h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="p-6">
-              <div className="text-4xl font-bold text-primary mb-2">3+</div>
-              <div className="text-muted-foreground">Years of Excellence</div>
-            </div>
-            <div className="p-6">
-              <div className="text-4xl font-bold text-accent mb-2">500+</div>
-              <div className="text-muted-foreground">Workshop Participants</div>
-            </div>
-            <div className="p-6">
-              <div className="text-4xl font-bold text-secondary mb-2">15+</div>
-              <div className="text-muted-foreground">Successful Ventures</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
-};
-
-export default About;
+}

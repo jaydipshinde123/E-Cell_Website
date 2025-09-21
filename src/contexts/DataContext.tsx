@@ -1,5 +1,7 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import axios from 'axios';
 
+// Data models interfaces
 export interface BlogPost {
   id: string;
   title: string;
@@ -32,29 +34,44 @@ export interface TeamMember {
   linkedin: string;
   twitter: string;
   email: string;
+  team: string;
 }
 
+export interface Contact {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+  submittedAt: string;
+}
+
+// Context interface with contact added
 interface DataContextType {
-  // Blog
   blogPosts: BlogPost[];
-  addBlogPost: (post: Omit<BlogPost, 'id'>) => void;
-  updateBlogPost: (id: string, post: Partial<BlogPost>) => void;
-  deleteBlogPost: (id: string) => void;
-  
-  // Events
+  addBlogPost: (post: Omit<BlogPost, 'id'>) => Promise<void>;
+  updateBlogPost: (id: string, post: Partial<BlogPost>) => Promise<void>;
+  deleteBlogPost: (id: string) => Promise<void>;
+
   events: Event[];
-  addEvent: (event: Omit<Event, 'id'>) => void;
-  updateEvent: (id: string, event: Partial<Event>) => void;
-  deleteEvent: (id: string) => void;
-  
-  // Team
+  addEvent: (event: Omit<Event, 'id'>) => Promise<void>;
+  updateEvent: (id: string, event: Partial<Event>) => Promise<void>;
+  deleteEvent: (id: string) => Promise<void>;
+
   teamMembers: TeamMember[];
-  addTeamMember: (member: Omit<TeamMember, 'id'>) => void;
-  updateTeamMember: (id: string, member: Partial<TeamMember>) => void;
-  deleteTeamMember: (id: string) => void;
+  addTeamMember: (member: Omit<TeamMember, 'id'>) => Promise<void>;
+  updateTeamMember: (id: string, member: Partial<TeamMember>) => Promise<void>;
+  deleteTeamMember: (id: string) => Promise<void>;
+
+  contacts: Contact[];
+  addContact: (contact: Omit<Contact, 'id' | 'submittedAt'>) => Promise<void>;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
+
+const API_BASE = 'https://ecellback.onrender.com/api'; // Your backend URL
 
 export const useData = () => {
   const context = useContext(DataContext);
@@ -64,154 +81,105 @@ export const useData = () => {
   return context;
 };
 
-const initialBlogPosts: BlogPost[] = [
-  {
-    id: '1',
-    title: 'Starting Your Entrepreneurial Journey',
-    content: 'Entrepreneurship is not just about starting a business; it\'s about solving problems and creating value. In this comprehensive guide, we explore the fundamental steps every aspiring entrepreneur should take...',
-    excerpt: 'Learn the essential steps to begin your entrepreneurial journey and turn your ideas into reality.',
-    author: 'E-Cell Team',
-    date: '2024-01-15',
-    image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&h=400&fit=crop',
-    tags: ['Entrepreneurship', 'Startup', 'Business']
-  },
-  {
-    id: '2',
-    title: 'Building a Strong Network',
-    content: 'Networking is crucial for any entrepreneur. It\'s not just about collecting business cards; it\'s about building meaningful relationships that can help you grow your business...',
-    excerpt: 'Discover how to build meaningful professional relationships that will support your entrepreneurial goals.',
-    author: 'John Doe',
-    date: '2024-01-10',
-    image: 'https://images.unsplash.com/photo-1515169067868-5387ec356754?w=800&h=400&fit=crop',
-    tags: ['Networking', 'Business', 'Growth']
-  }
-];
-
-const initialEvents: Event[] = [
-  {
-    id: '1',
-    title: 'Startup Pitch Competition',
-    description: 'Present your innovative startup ideas to a panel of expert judges and win exciting prizes.',
-    date: '2024-02-15',
-    time: '10:00 AM',
-    location: 'College Auditorium',
-    image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=400&fit=crop',
-    category: 'Competition',
-    registrationOpen: true
-  },
-  {
-    id: '2',
-    title: 'Entrepreneurship Workshop',
-    description: 'Learn from successful entrepreneurs about building and scaling startups.',
-    date: '2024-02-20',
-    time: '2:00 PM',
-    location: 'Seminar Hall A',
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop',
-    category: 'Workshop',
-    registrationOpen: true
-  }
-];
-
-const initialTeamMembers: TeamMember[] = [
-  {
-    id: '1',
-    name: 'Alex Johnson',
-    role: 'President',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop',
-    bio: 'Leading the E-Cell with passion for innovation and entrepreneurship.',
-    linkedin: 'https://linkedin.com',
-    twitter: 'https://twitter.com',
-    email: 'alex@ecell.com'
-  },
-  {
-    id: '2',
-    name: 'Sarah Chen',
-    role: 'Vice President',
-    image: 'https://images.unsplash.com/photo-1494790108755-2616b612b1e9?w=400&h=400&fit=crop',
-    bio: 'Focused on building startup ecosystem and mentoring aspiring entrepreneurs.',
-    linkedin: 'https://linkedin.com',
-    twitter: 'https://twitter.com',
-    email: 'sarah@ecell.com'
-  }
-];
-
 export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>(initialBlogPosts);
-  const [events, setEvents] = useState<Event[]>(initialEvents);
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(initialTeamMembers);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [contacts, setContacts] = useState<Contact[]>([]); // Contact state
 
-  // Blog functions
-  const addBlogPost = (post: Omit<BlogPost, 'id'>) => {
-    const newPost: BlogPost = {
-      ...post,
-      id: Date.now().toString()
-    };
-    setBlogPosts(prev => [newPost, ...prev]);
+  // Fetch initial data once
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [blogRes, eventRes, teamRes] = await Promise.all([
+          axios.get(`${API_BASE}/blogposts`),
+          axios.get(`${API_BASE}/events`),
+          axios.get(`${API_BASE}/team`),
+        ]);
+
+        setBlogPosts(blogRes.data.map((post: any) => ({ ...post, id: post._id })));
+        setEvents(eventRes.data.map((event: any) => ({ ...event, id: event._id })));
+        setTeamMembers(teamRes.data.map((mem: any) => ({ ...mem, id: mem._id })));
+      } catch (error) {
+        console.error('Failed to fetch data from API:', error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  // Blog CRUD
+  const addBlogPost = async (post: Omit<BlogPost, 'id'>) => {
+    const res = await axios.post(`${API_BASE}/blogposts`, post);
+    setBlogPosts(prev => [{ ...res.data, id: res.data._id }, ...prev]);
   };
 
-  const updateBlogPost = (id: string, updates: Partial<BlogPost>) => {
-    setBlogPosts(prev => prev.map(post => 
-      post.id === id ? { ...post, ...updates } : post
-    ));
+  const updateBlogPost = async (id: string, updates: Partial<BlogPost>) => {
+    const res = await axios.put(`${API_BASE}/blogposts/${id}`, updates);
+    setBlogPosts(prev => prev.map(post => (post.id === id ? { ...res.data, id: res.data._id } : post)));
   };
 
-  const deleteBlogPost = (id: string) => {
+  const deleteBlogPost = async (id: string) => {
+    await axios.delete(`${API_BASE}/blogposts/${id}`);
     setBlogPosts(prev => prev.filter(post => post.id !== id));
   };
 
-  // Event functions
-  const addEvent = (event: Omit<Event, 'id'>) => {
-    const newEvent: Event = {
-      ...event,
-      id: Date.now().toString()
-    };
-    setEvents(prev => [newEvent, ...prev]);
+  // Event CRUD
+  const addEvent = async (event: Omit<Event, 'id'>) => {
+    const res = await axios.post(`${API_BASE}/events`, event);
+    setEvents(prev => [{ ...res.data, id: res.data._id }, ...prev]);
   };
 
-  const updateEvent = (id: string, updates: Partial<Event>) => {
-    setEvents(prev => prev.map(event => 
-      event.id === id ? { ...event, ...updates } : event
-    ));
+  const updateEvent = async (id: string, updates: Partial<Event>) => {
+    const res = await axios.put(`${API_BASE}/events/${id}`, updates);
+    setEvents(prev => prev.map(event => (event.id === id ? { ...res.data, id: res.data._id } : event)));
   };
 
-  const deleteEvent = (id: string) => {
+  const deleteEvent = async (id: string) => {
+    await axios.delete(`${API_BASE}/events/${id}`);
     setEvents(prev => prev.filter(event => event.id !== id));
   };
 
-  // Team functions
-  const addTeamMember = (member: Omit<TeamMember, 'id'>) => {
-    const newMember: TeamMember = {
-      ...member,
-      id: Date.now().toString()
-    };
-    setTeamMembers(prev => [...prev, newMember]);
+  // Team CRUD
+  const addTeamMember = async (member: Omit<TeamMember, 'id'>) => {
+    const res = await axios.post(`${API_BASE}/team`, member);
+    setTeamMembers(prev => [...prev, { ...res.data, id: res.data._id }]);
   };
 
-  const updateTeamMember = (id: string, updates: Partial<TeamMember>) => {
-    setTeamMembers(prev => prev.map(member => 
-      member.id === id ? { ...member, ...updates } : member
-    ));
+  const updateTeamMember = async (id: string, updates: Partial<TeamMember>) => {
+    const res = await axios.put(`${API_BASE}/team/${id}`, updates);
+    setTeamMembers(prev => prev.map(member => (member.id === id ? { ...res.data, id: res.data._id } : member)));
   };
 
-  const deleteTeamMember = (id: string) => {
+  const deleteTeamMember = async (id: string) => {
+    await axios.delete(`${API_BASE}/team/${id}`);
     setTeamMembers(prev => prev.filter(member => member.id !== id));
   };
 
+  // Contact form add (only add implemented here)
+  const addContact = async (contact: Omit<Contact, 'id' | 'submittedAt'>) => {
+    const res = await axios.post(`${API_BASE}/contacts`, contact);
+    setContacts(prev => [{ ...res.data, id: res.data._id }, ...prev]);
+  };
+
   return (
-    <DataContext.Provider value={{
-      blogPosts,
-      addBlogPost,
-      updateBlogPost,
-      deleteBlogPost,
-      events,
-      addEvent,
-      updateEvent,
-      deleteEvent,
-      teamMembers,
-      addTeamMember,
-      updateTeamMember,
-      deleteTeamMember
-    }}>
+    <DataContext.Provider
+      value={{
+        blogPosts,
+        addBlogPost,
+        updateBlogPost,
+        deleteBlogPost,
+        events,
+        addEvent,
+        updateEvent,
+        deleteEvent,
+        teamMembers,
+        addTeamMember,
+        updateTeamMember,
+        deleteTeamMember,
+        contacts,
+        addContact,
+      }}
+    >
       {children}
     </DataContext.Provider>
   );

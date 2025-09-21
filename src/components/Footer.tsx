@@ -1,5 +1,6 @@
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowUp } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, ArrowUp, Github } from 'lucide-react';
 import ecellLogo from '@/assets/ecell-logo.jpg';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -23,140 +24,86 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-card border-t border-border">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand Section */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center space-x-3 mb-6">
-              <img 
-                src={ecellLogo} 
-                alt="E-Cell GHRCEMJ" 
-                className="h-12 w-12 rounded-lg"
-              />
-              <div>
-                <h3 className="font-orbitron font-bold text-xl gradient-text">E-Cell</h3>
-                <p className="text-sm text-muted-foreground">GHRCEMJ</p>
+    <footer className="bg-card border-t border-border/20 mt-20">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Brand */}
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <div className="w-25 h-25  rounded-lg flex items-center justify-center">
+            <img src={ecellLogo} alt="E-Cell logo with a modern and vibrant design" className="w-20 h-20 object-contain" />
               </div>
+              <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent flex items-center">
+                E-Cell
+              </span>
             </div>
-            <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
-              Empowering the next generation of entrepreneurs through innovation, 
-              mentorship, and community building at GHRC Engineering & Management College.
+            <p className="text-muted-foreground text-sm">
+              Fostering entrepreneurship and innovation at our college. Building the next generation of entrepreneurs.
             </p>
             <div className="flex space-x-4">
-              {[
-                { icon: Facebook, color: 'hover:text-blue-500' },
-                { icon: Twitter, color: 'hover:text-blue-400' },
-                { icon: Instagram, color: 'hover:text-pink-500' },
-                { icon: Linkedin, color: 'hover:text-blue-600' }
-              ].map((social, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className={`text-muted-foreground ${social.color} transition-all duration-300 hover:scale-110`}
-                >
-                  <social.icon size={20} />
-                </a>
-              ))}
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <Github className="w-5 h-5" />
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <Linkedin className="w-5 h-5" />
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <Twitter className="w-5 h-5" />
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <Instagram className="w-5 h-5" />
+              </a>
             </div>
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-6">Quick Links</h4>
-            <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Quick Links</h3>
+            <ul className="space-y-2">
+              <li><Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">About Us</Link></li>
+              <li><Link to="/events" className="text-muted-foreground hover:text-primary transition-colors">Events</Link></li>
+              <li><Link to="/team" className="text-muted-foreground hover:text-primary transition-colors">Our Team</Link></li>
+              <li><Link to="/winners" className="text-muted-foreground hover:text-primary transition-colors">Past Winners</Link></li>
+              <li><Link to="/sponsors" className="text-muted-foreground hover:text-primary transition-colors">Sponsors</Link></li>
             </ul>
           </div>
 
-          {/* Resources */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-6">Resources</h4>
-            <ul className="space-y-3">
-              {resources.map((resource) => (
-                <li key={resource.name}>
-                  <a
-                    href={resource.href}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-300 text-sm"
-                  >
-                    {resource.name}
-                  </a>
-                </li>
-              ))}
+          {/* Programs */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Programs</h3>
+            <ul className="space-y-2">
+              <li><span className="text-muted-foreground">Startup Incubation</span></li>
+              <li><span className="text-muted-foreground">Mentorship Program</span></li>
+              <li><span className="text-muted-foreground">Innovation Challenges</span></li>
+              <li><span className="text-muted-foreground">Workshops & Seminars</span></li>
+              <li><span className="text-muted-foreground">Networking Events</span></li>
             </ul>
           </div>
 
-          {/* Contact Info */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-6">Contact Info</h4>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <Mail className="text-primary mt-0.5" size={16} />
-                <div>
-                  <p className="text-sm text-muted-foreground">ecell@ghrcemj.edu.in</p>
-                </div>
+          {/* Contact */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold">Contact Info</h3>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2">
+                <Mail className="w-4 h-4 text-primary" />
+                <span className="text-muted-foreground text-sm">ecell@college.edu</span>
               </div>
-              <div className="flex items-start gap-3">
-                <Phone className="text-primary mt-0.5" size={16} />
-                <div>
-                  <p className="text-sm text-muted-foreground">+91 98765 43210</p>
-                </div>
+              <div className="flex items-center space-x-2">
+                <Phone className="w-4 h-4 text-primary" />
+                <span className="text-muted-foreground text-sm">+91 12345 67890</span>
               </div>
-              <div className="flex items-start gap-3">
-                <MapPin className="text-primary mt-0.5" size={16} />
-                <div>
-                  <p className="text-sm text-muted-foreground">
-                    GHRC Engineering & Management College<br />
-                    Nagpur, Maharashtra 440016
-                  </p>
-                </div>
+              <div className="flex items-center space-x-2">
+                <MapPin className="w-4 h-4 text-primary" />
+                <span className="text-muted-foreground text-sm">Gat No.57, Shirsoli Road, Mohadi Jalgaon - 425002</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Newsletter Signup */}
-        <div className="border-t border-border mt-12 pt-8">
-          <div className="text-center mb-8">
-            <h4 className="font-semibold text-foreground mb-4">Stay Connected</h4>
-            <p className="text-muted-foreground mb-6 max-w-md mx-auto text-sm">
-              Subscribe to our newsletter for the latest updates on events, opportunities, and success stories
-            </p>
-            <div className="flex max-w-md mx-auto gap-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:border-primary text-sm"
-              />
-              <button className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors duration-300 text-sm font-medium">
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-sm text-muted-foreground mb-4 md:mb-0">
-            © 2024 E-Cell GHRCEMJ. All rights reserved. Built with ❤️ for entrepreneurs.
-          </div>
-          
-          <button
-            onClick={scrollToTop}
-            className="flex items-center gap-2 text-primary hover:text-accent transition-colors duration-300 text-sm font-medium group"
-          >
-            Back to Top
-            <ArrowUp className="group-hover:-translate-y-1 transition-transform duration-300" size={16} />
-          </button>
+        <div className="border-t border-border/20 mt-8 pt-8 text-center">
+          <p className="text-muted-foreground text-sm">
+            © 2025 E-Cell. All rights reserved. Built with ❤️ by the E-Cell Team.
+          </p>
         </div>
       </div>
     </footer>

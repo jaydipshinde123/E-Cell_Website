@@ -51,7 +51,7 @@ const Events = () => {
           {filteredEvents.map((event) => (
             <div 
               key={event.id}
-              className="card-3d bg-card rounded-2xl overflow-hidden border border-border group hover:border-primary/50 transition-all duration-300"
+              className=" bg-card rounded-2xl overflow-hidden border border-border group hover:border-primary/50 transition-all duration-300"
             >
               {/* Event Image */}
               <div className="relative h-48 bg-gradient-to-br from-primary/20 to-accent/20 overflow-hidden">
@@ -111,20 +111,6 @@ const Events = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Event Calendar CTA */}
-        <div className="text-center mt-16">
-          <div className="bg-card p-8 rounded-2xl border border-border inline-block">
-            <h3 className="text-2xl font-bold mb-4 gradient-text">View Full Calendar</h3>
-            <p className="text-muted-foreground mb-6">
-              Explore all our upcoming events and plan your entrepreneurial journey
-            </p>
-            <button className="btn-primary">
-              <Calendar className="mr-2" size={20} />
-              Event Calendar
-            </button>
-          </div>
         </div>
       </div>
     </section>

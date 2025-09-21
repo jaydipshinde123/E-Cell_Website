@@ -44,14 +44,15 @@ const Admin = () => {
   });
 
   // Team form state
-  const [teamForm, setTeamForm] = useState({
+   const [teamForm, setTeamForm] = useState({
     name: '',
     role: '',
     image: '',
     bio: '',
     linkedin: '',
     twitter: '',
-    email: ''
+    email: '',
+    team: '',
   });
 
   const [editingItem, setEditingItem] = useState<any>(null);
@@ -97,13 +98,12 @@ const Admin = () => {
     e.preventDefault();
     if (editingItem) {
       updateTeamMember(editingItem.id, teamForm);
-      toast({ title: "Team member updated successfully!" });
+      toast({ title: 'Team member updated successfully!' });
     } else {
       addTeamMember(teamForm);
-      toast({ title: "Team member added successfully!" });
+      toast({ title: 'Team member added successfully!' });
     }
-    
-    setTeamForm({ name: '', role: '', image: '', bio: '', linkedin: '', twitter: '', email: '' });
+    setTeamForm({ name: '', role: '', image: '', bio: '', linkedin: '', twitter: '', email: '', team: '' });
     setEditingItem(null);
     setDialogOpen(false);
   };

@@ -1,96 +1,105 @@
-import { Linkedin, Twitter, Mail, Github } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Card3D } from '@/components/ui/3d-card';
+import { Github, Linkedin, Instagram, Mail, Twitter } from 'lucide-react';
 import { useData } from '@/contexts/DataContext';
 
-const Team = () => {
+export default function Team() {
   const { teamMembers } = useData();
 
+  // Group members by team if needed (optional)
+  const groupedMembers = teamMembers.reduce((acc, member) => {
+    if (!acc[member.team]) {
+      acc[member.team] = [];
+    }
+    acc[member.team].push(member);
+    return acc;
+  }, {} as Record<string, typeof teamMembers>);
+
   return (
-    <section id="team" className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-orbitron font-bold mb-6 gradient-text">
-            Meet Our Team
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            The passionate individuals driving entrepreneurial success at GHRCEMJ
-          </p>
-        </div>
+    <div className="container mx-auto px-4 py-20">
+      <section className="text-center mb-12">
+        <h1 className="text-4xl md:text-6xl font-bold animate-bounce">
+          Meet Our <span className="text-primary">Team</span>
+        </h1>
+        <p className="text-xl text-muted-foreground max-w-3xl mx-auto mt-4">
+          Passionate individuals working together to build an amazing entrepreneurial ecosystem.
+        </p>
+      </section>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {teamMembers.map((member, index) => (
-            <div 
-              key={index}
-              className="group relative bg-card rounded-2xl overflow-hidden border border-border card-3d"
-            >
-              {/* Card Front */}
-              <div className="p-6 text-center transition-all duration-500 group-hover:opacity-0">
-                <div className="relative mb-6">
-                  <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-primary to-accent p-1">
-                    <img 
-                      src={member.image} 
-                      alt={member.name}
-                      className="w-full h-full rounded-full object-cover"
-                    />
-                  </div>
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-primary rounded-full animate-pulse"></div>
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">{member.name}</h3>
-                <p className="text-primary font-semibold mb-3">{member.role}</p>
-              </div>
-
-              {/* Card Back */}
-              <div className="absolute inset-0 p-6 bg-gradient-to-br from-card to-muted opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-center">
-                <h3 className="text-xl font-bold text-foreground mb-2">{member.name}</h3>
-                <p className="text-primary font-semibold mb-4">{member.role}</p>
-                <p className="text-muted-foreground text-sm mb-6">{member.bio}</p>
-                
-                {/* Social Links */}
-                <div className="flex justify-center space-x-4">
-                  {member.linkedin && (
-                    <a 
-                      href={member.linkedin}
-                      className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
-                    >
-                      <Linkedin size={20} />
-                    </a>
-                  )}
-                  {member.twitter && (
-                    <a 
-                      href={member.twitter}
-                      className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
-                    >
-                      <Twitter size={20} />
-                    </a>
-                  )}
-                  {member.email && (
-                    <a 
-                      href={`mailto:${member.email}`}
-                      className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
-                    >
-                      <Mail size={20} />
-                    </a>
-                  )}
+      <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
+        {teamMembers.map((member, index) => (
+          <Card3D key={index}>
+            <Card className="glass hover-lift overflow-hidden text-center p-4 flex flex-col items-center group relative">
+              <div className="relative mb-4">
+                <img
+                  src={member.image || '/api/placeholder/150/150'}
+                  alt={member.name}
+                  className="w-32 h-32 rounded-full object-cover"
+                />
+                {/* Hover overlay with bio */}
+                <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full flex items-center justify-center p-2">
+                  <p className="text-white text-xs">{member.bio || ''}</p>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Join Team CTA */}
-        <div className="text-center mt-16">
-          <div className="bg-card p-8 rounded-2xl border border-border inline-block">
-            <h3 className="text-2xl font-bold mb-4 gradient-text">Want to Join Our Team?</h3>
-            <p className="text-muted-foreground mb-6">
-              We're always looking for passionate individuals to join our mission
-            </p>
-            <button className="btn-primary">
-              Apply Now
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
+              
+              <h3 className="text-lg font-semibold">{member.name}</h3>
+              <p className="text-sm text-muted-foreground mb-2">{member.role}</p>
+              
+              <div className="flex space-x-3 mt-2">
+                {/* Uncomment and use if you store these urls:
+                {member.github && (
+                  <a
+                    href={member.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Github className="w-5 h-5" />
+                  </a>
+                )}
+                {member.instagram && (
+                  <a
+                    href={member.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Instagram className="w-5 h-5" />
+                  </a>
+                )} */}
+                {member.linkedin && (
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Linkedin className="w-5 h-5" />
+                  </a>
+                )}
+                {member.twitter && (
+                  <a
+                    href={member.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Twitter className="w-5 h-5" />
+                  </a>
+                )}
+                {member.email && (
+                  <a
+                    href={`mailto:${member.email}`}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Mail className="w-5 h-5" />
+                  </a>
+                )}
+              </div>
+            </Card>
+          </Card3D>
+        ))}
+      </section>
+    </div>
   );
-};
-
-export default Team;
+}

@@ -99,7 +99,7 @@ const Blog = () => {
           {blogPosts.map((post) => (
             <article 
               key={post.id}
-              className="card-3d bg-card rounded-2xl overflow-hidden border border-border group hover:border-primary/50 transition-all duration-300 cursor-pointer"
+              className=" bg-card rounded-2xl overflow-hidden border border-border group hover:border-primary/50 transition-all duration-300 cursor-pointer"
               onClick={() => setSelectedPost(post)}
             >
               {/* Post Image */}
