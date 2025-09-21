@@ -1,73 +1,8 @@
 import { Linkedin, Twitter, Mail, Github } from 'lucide-react';
+import { useData } from '@/contexts/DataContext';
 
 const Team = () => {
-  const teamMembers = [
-    {
-      name: "Raj Sharma",
-      role: "President",
-      image: "/api/placeholder/300/300",
-      bio: "Leading E-Cell with vision and passion for entrepreneurship",
-      social: {
-        linkedin: "#",
-        twitter: "#",
-        email: "raj@ecell.com"
-      }
-    },
-    {
-      name: "Priya Patel",
-      role: "Vice President",
-      image: "/api/placeholder/300/300",
-      bio: "Driving innovation and strategic partnerships",
-      social: {
-        linkedin: "#",
-        github: "#",
-        email: "priya@ecell.com"
-      }
-    },
-    {
-      name: "Arjun Kumar",
-      role: "Technical Head",
-      image: "/api/placeholder/300/300",
-      bio: "Building tech solutions and leading development",
-      social: {
-        linkedin: "#",
-        github: "#",
-        twitter: "#"
-      }
-    },
-    {
-      name: "Sneha Joshi",
-      role: "Marketing Head",
-      image: "/api/placeholder/300/300",
-      bio: "Crafting compelling stories and building community",
-      social: {
-        linkedin: "#",
-        twitter: "#",
-        email: "sneha@ecell.com"
-      }
-    },
-    {
-      name: "Vikram Singh",
-      role: "Operations Head",
-      image: "/api/placeholder/300/300",
-      bio: "Ensuring smooth operations and event management",
-      social: {
-        linkedin: "#",
-        email: "vikram@ecell.com"
-      }
-    },
-    {
-      name: "Kavya Reddy",
-      role: "Finance Head",
-      image: "/api/placeholder/300/300",
-      bio: "Managing finances and securing funding opportunities",
-      social: {
-        linkedin: "#",
-        twitter: "#",
-        email: "kavya@ecell.com"
-      }
-    }
-  ];
+  const { teamMembers } = useData();
 
   return (
     <section id="team" className="py-20 bg-muted/30">
@@ -91,9 +26,11 @@ const Team = () => {
               <div className="p-6 text-center transition-all duration-500 group-hover:opacity-0">
                 <div className="relative mb-6">
                   <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-primary to-accent p-1">
-                    <div className="w-full h-full rounded-full bg-muted flex items-center justify-center text-4xl font-bold text-foreground">
-                      {member.name.split(' ').map(n => n[0]).join('')}
-                    </div>
+                    <img 
+                      src={member.image} 
+                      alt={member.name}
+                      className="w-full h-full rounded-full object-cover"
+                    />
                   </div>
                   <div className="absolute -top-2 -right-2 w-6 h-6 bg-primary rounded-full animate-pulse"></div>
                 </div>
@@ -109,33 +46,25 @@ const Team = () => {
                 
                 {/* Social Links */}
                 <div className="flex justify-center space-x-4">
-                  {member.social.linkedin && (
+                  {member.linkedin && (
                     <a 
-                      href={member.social.linkedin}
+                      href={member.linkedin}
                       className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
                     >
                       <Linkedin size={20} />
                     </a>
                   )}
-                  {member.social.twitter && (
+                  {member.twitter && (
                     <a 
-                      href={member.social.twitter}
+                      href={member.twitter}
                       className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
                     >
                       <Twitter size={20} />
                     </a>
                   )}
-                  {member.social.github && (
+                  {member.email && (
                     <a 
-                      href={member.social.github}
-                      className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
-                    >
-                      <Github size={20} />
-                    </a>
-                  )}
-                  {member.social.email && (
-                    <a 
-                      href={`mailto:${member.social.email}`}
+                      href={`mailto:${member.email}`}
                       className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:scale-110 transform"
                     >
                       <Mail size={20} />

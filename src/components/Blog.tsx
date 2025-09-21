@@ -1,77 +1,12 @@
 import { useState } from 'react';
 import { Calendar, User, ArrowRight, Search, Tag } from 'lucide-react';
+import { useData } from '@/contexts/DataContext';
 
 const Blog = () => {
   const [selectedPost, setSelectedPost] = useState(null);
+  const { blogPosts } = useData();
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: "10 Essential Skills Every Entrepreneur Needs",
-      excerpt: "Discover the fundamental skills that separate successful entrepreneurs from the rest. From leadership to financial literacy, we cover it all.",
-      author: "Raj Sharma",
-      date: "2024-02-15",
-      category: "Skills",
-      readTime: "5 min read",
-      image: "/api/placeholder/400/250",
-      content: `
-        <h2>Introduction</h2>
-        <p>Entrepreneurship is more than just having a great idea. It requires a diverse set of skills that can be developed over time. Here are the 10 essential skills every entrepreneur needs to succeed.</p>
-        
-        <h3>1. Leadership Skills</h3>
-        <p>Great entrepreneurs are great leaders. They inspire their teams, communicate vision effectively, and make tough decisions when needed.</p>
-        
-        <h3>2. Financial Literacy</h3>
-        <p>Understanding cash flow, profit margins, and financial planning is crucial for any business owner.</p>
-        
-        <!-- More content would go here -->
-      `
-    },
-    {
-      id: 2,
-      title: "Success Story: From Idea to ₹1 Cr Revenue",
-      excerpt: "How GHRCEMJ alumnus transformed a simple college project into a multi-crore business within 2 years.",
-      author: "Priya Patel",
-      date: "2024-02-10",
-      category: "Success Story",
-      readTime: "8 min read",
-      image: "/api/placeholder/400/250",
-      content: `
-        <h2>The Beginning</h2>
-        <p>What started as a college project has now become one of the most successful startups from our campus...</p>
-      `
-    },
-    {
-      id: 3,
-      title: "Funding Guide: Securing Your First Investment",
-      excerpt: "A comprehensive guide to understanding different funding options and preparing for investor meetings.",
-      author: "Arjun Kumar",
-      date: "2024-02-05",
-      category: "Funding",
-      readTime: "12 min read",
-      image: "/api/placeholder/400/250",
-      content: `
-        <h2>Understanding Funding Stages</h2>
-        <p>Every startup goes through different funding stages. Here's what you need to know...</p>
-      `
-    },
-    {
-      id: 4,
-      title: "Building a Strong Team Culture",
-      excerpt: "Learn how to create a positive work environment that attracts top talent and drives innovation.",
-      author: "Sneha Joshi",
-      date: "2024-01-28",
-      category: "Team Building",
-      readTime: "6 min read",
-      image: "/api/placeholder/400/250",
-      content: `
-        <h2>The Foundation of Success</h2>
-        <p>A strong team culture is the backbone of any successful startup...</p>
-      `
-    }
-  ];
-
-  const categories = ["All", "Skills", "Success Story", "Funding", "Team Building"];
+  const categories = ["All", ...Array.from(new Set(blogPosts.flatMap(post => post.tags)))];
 
   if (selectedPost) {
     return (
@@ -92,7 +27,7 @@ const Blog = () => {
               
               <h1 className="text-4xl font-bold mb-4 gradient-text">{selectedPost.title}</h1>
               
-              <div className="flex items-center gap-6 text-muted-foreground mb-6">
+                <div className="flex items-center gap-6 text-muted-foreground mb-6">
                 <div className="flex items-center gap-2">
                   <User size={16} />
                   <span>{selectedPost.author}</span>
@@ -103,15 +38,22 @@ const Blog = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Tag size={16} />
-                  <span>{selectedPost.category}</span>
+                  <div className="flex gap-1">
+                    {selectedPost.tags.map((tag, index) => (
+                      <span key={index} className="bg-primary/10 text-primary px-2 py-1 rounded text-xs">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
             
             <div 
-              className="prose prose-lg max-w-none text-foreground"
-              dangerouslySetInnerHTML={{ __html: selectedPost.content }}
-            />
+              className="prose prose-lg max-w-none text-foreground prose-headings:text-primary prose-a:text-accent prose-strong:text-foreground"
+            >
+              <div dangerouslySetInnerHTML={{ __html: selectedPost.content }} />
+            </div>
           </article>
         </div>
       </div>
@@ -161,10 +103,18 @@ const Blog = () => {
               onClick={() => setSelectedPost(post)}
             >
               {/* Post Image */}
-              <div className="relative h-48 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                <div className="text-6xl opacity-20">📝</div>
-                <div className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-medium">
-                  {post.category}
+              <div className="relative h-48 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center overflow-hidden">
+                <img 
+                  src={post.image} 
+                  alt={post.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute top-4 left-4">
+                  {post.tags.slice(0, 2).map((tag, tagIndex) => (
+                    <div key={tagIndex} className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-medium mb-2">
+                      {tag}
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -190,7 +140,6 @@ const Blog = () => {
                       <span>{post.date}</span>
                     </div>
                   </div>
-                  <span>{post.readTime}</span>
                 </div>
 
                 {/* Read More Button */}

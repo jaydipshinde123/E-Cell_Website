@@ -1,69 +1,17 @@
 import { useState } from 'react';
 import { Calendar, MapPin, Users, Clock, ExternalLink, Filter } from 'lucide-react';
+import { useData } from '@/contexts/DataContext';
 
 const Events = () => {
   const [filter, setFilter] = useState('all');
-
-  const events = [
-    {
-      id: 1,
-      title: "Startup Pitch Competition 2024",
-      date: "2024-03-15",
-      time: "10:00 AM",
-      location: "Main Auditorium, GHRCEMJ",
-      attendees: 200,
-      category: "competition",
-      status: "upcoming",
-      description: "Annual pitch competition where students present their innovative business ideas to industry experts.",
-      image: "/api/placeholder/400/250",
-      registrationLink: "#"
-    },
-    {
-      id: 2,
-      title: "Entrepreneurship Workshop Series",
-      date: "2024-02-28",
-      time: "2:00 PM",
-      location: "E-Cell Lab, Block A",
-      attendees: 50,
-      category: "workshop",
-      status: "upcoming",
-      description: "Interactive workshop series covering business fundamentals, market analysis, and growth strategies.",
-      image: "/api/placeholder/400/250",
-      registrationLink: "#"
-    },
-    {
-      id: 3,
-      title: "Industry Leaders Meet",
-      date: "2024-02-10",
-      time: "11:00 AM",
-      location: "Conference Hall",
-      attendees: 150,
-      category: "networking",
-      status: "completed",
-      description: "Exclusive networking session with successful entrepreneurs and industry leaders.",
-      image: "/api/placeholder/400/250",
-      registrationLink: "#"
-    },
-    {
-      id: 4,
-      title: "Innovation Hackathon",
-      date: "2024-04-20",
-      time: "9:00 AM",
-      location: "Tech Park, GHRCEMJ",
-      attendees: 300,
-      category: "competition",
-      status: "upcoming",
-      description: "48-hour hackathon focused on developing innovative solutions for social and business challenges.",
-      image: "/api/placeholder/400/250",
-      registrationLink: "#"
-    }
-  ];
+  const { events } = useData();
 
   const categories = [
     { id: 'all', name: 'All Events' },
-    { id: 'workshop', name: 'Workshops' },
-    { id: 'competition', name: 'Competitions' },
-    { id: 'networking', name: 'Networking' }
+    ...Array.from(new Set(events.map(event => event.category))).map(cat => ({
+      id: cat,
+      name: cat.charAt(0).toUpperCase() + cat.slice(1) + 's'
+    }))
   ];
 
   const filteredEvents = filter === 'all' ? events : events.filter(event => event.category === filter);
@@ -106,14 +54,18 @@ const Events = () => {
               className="card-3d bg-card rounded-2xl overflow-hidden border border-border group hover:border-primary/50 transition-all duration-300"
             >
               {/* Event Image */}
-              <div className="relative h-48 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                <div className="text-6xl opacity-20">🚀</div>
+              <div className="relative h-48 bg-gradient-to-br from-primary/20 to-accent/20 overflow-hidden">
+                <img 
+                  src={event.image} 
+                  alt={event.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
                 <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-medium ${
-                  event.status === 'upcoming' 
+                  event.registrationOpen 
                     ? 'bg-primary text-primary-foreground' 
                     : 'bg-muted text-muted-foreground'
                 }`}>
-                  {event.status === 'upcoming' ? 'Upcoming' : 'Completed'}
+                  {event.registrationOpen ? 'Registration Open' : 'Registration Closed'}
                 </div>
               </div>
 
@@ -141,12 +93,12 @@ const Events = () => {
                   </div>
                   <div className="flex items-center text-muted-foreground">
                     <Users className="mr-2" size={16} />
-                    <span className="text-sm">{event.attendees} participants</span>
+                    <span className="text-sm">Expected attendees</span>
                   </div>
                 </div>
 
                 {/* CTA Button */}
-                {event.status === 'upcoming' ? (
+                {event.registrationOpen ? (
                   <button className="w-full btn-primary group">
                     Register Now
                     <ExternalLink className="ml-2 group-hover:translate-x-1 transition-transform duration-300" size={16} />
