@@ -87,13 +87,6 @@ const Navigation = () => {
                   ></span>
                 </Link>
               ))}
-              <button
-                onClick={handleAdminClick}
-                className="text-foreground hover:text-accent transition-colors duration-300 font-medium relative group flex items-center gap-2 bg-transparent border-none cursor-pointer"
-              >
-                <Settings className="w-4 h-4" />
-                <span className="hidden lg:inline"></span>
-              </button>
             </div>
 
             {/* Mobile menu button */}
