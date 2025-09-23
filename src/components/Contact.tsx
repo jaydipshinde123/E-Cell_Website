@@ -19,19 +19,13 @@ const contactInfo = [
   {
     icon: Mail,
     title: 'Email Us',
-    details: 'ecell@college.edu',
+    details: 'ghriebmecell@gmail.com',
     description: 'Send us an email anytime'
-  },
-  {
-    icon: Phone,
-    title: 'Call Us',
-    details: '+91 12345 67890',
-    description: 'Mon-Fri 9AM-6PM'
   },
   {
     icon: MapPin,
     title: 'Visit Us',
-    details: 'E-Cell Office, Room 301, Main Building',
+    details: 'E-Cell Office, Main Building',
     description: 'Gat No.57, Shirsoli Road, Mohadi Jalgaon - 425002'
   },
   {
@@ -46,15 +40,15 @@ const teamContacts = [
   {
     name: 'Overall Co-ordinator',
     person: 'Kalyani Ravindra Kadam',
-    email: 'kalyani.kadam@ecell.edu',
-    phone: '+91 98765 43210',
+    email: '',
+    phone: '',
     icon: Users,
   },
   {
     name: 'Events and PR Head',
     person: 'Nidhi Rajesh Bajpai',
-    email: 'nidhi.bajpai@ecell.edu',
-    phone: '+91 98765 43211',
+    email: '',
+    phone: '',
     icon: Users,
   },
 ];
@@ -246,16 +240,13 @@ export default function Contact() {
                 <CardContent>
                   <div className="h-64 rounded-lg overflow-hidden mb-4">
                     {/* Google Maps iframe embed */}
-                    <iframe
-                      title="Ghraisoni College, Jalgaon Location"
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3761.702631651456!2d75.56601421517543!3d21.010366292542875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4a964a68c09a7%3A0x1787ff6e34ef6a4a!2sGhraisoni%20Institute%20of%20Technology%2C%20Jalgaon%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1694302338518!5m2!1sen!2sin"
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen={false}
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                    ></iframe>
+                    <iframe 
+                    title='G.H Raisoni College Of Engineering And Management, Jalgaon'
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3541.41290272857!2d75.55350229999999!3d20.962134099999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd90e6dda5a2297%3A0xed1012e1b1c57106!2sG%20H%20Raisoni%20Institute%20of%20Engineering%20and%20Business%20Management%20jalgaon!5e1!3m2!1sen!2sin!4v1758644104560!5m2!1sen!2sin" 
+                    width="600" height="450" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                   </div>
                   <div className="space-y-2">
                     <p className="font-semibold">G.H.Raisoni College Of Engineering And Management</p>

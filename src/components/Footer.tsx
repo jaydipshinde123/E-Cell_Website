@@ -41,16 +41,10 @@ const Footer = () => {
               Fostering entrepreneurship and innovation at our college. Building the next generation of entrepreneurs.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Github className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://www.linkedin.com/company/ecell_ghriebm/" className="text-muted-foreground hover:text-primary transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://www.instagram.com/ecell_ghrcemj" className="text-muted-foreground hover:text-primary transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
@@ -80,21 +74,17 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact */}
+            {/* Contact */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Contact Info</h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-primary" />
-                <span className="text-muted-foreground text-sm">ecell@college.edu</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Phone className="w-4 h-4 text-primary" />
-                <span className="text-muted-foreground text-sm">+91 12345 67890</span>
+                <span className="text-muted-foreground text-sm"><a href='mailto:ghriebmecell@gmail.com'>ghriebmecell@gmail.com</a></span>
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4 text-primary" />
-                <span className="text-muted-foreground text-sm">Gat No.57, Shirsoli Road, Mohadi Jalgaon - 425002</span>
+                <span className="text-muted-foreground text-sm"><a href='https://maps.app.goo.gl/FnoND5S2hHao4Ej66'>Gat No.57, Shirsoli Road, Mohadi Jalgaon - 425002</a></span>
               </div>
             </div>
           </div>
@@ -102,7 +92,7 @@ const Footer = () => {
 
         <div className="border-t border-border/20 mt-8 pt-8 text-center">
           <p className="text-muted-foreground text-sm">
-            © 2025 E-Cell. All rights reserved. Built with ❤️ by the E-Cell Team.
+            © 2025 E-Cell. All rights reserved.
           </p>
         </div>
       </div>

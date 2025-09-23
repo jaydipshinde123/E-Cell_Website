@@ -43,7 +43,7 @@ const Navigation = () => {
   // Handle login submit inside Navigation
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    if (username === 'JAY' && password === '123') {
+    if (username === 'Admin' && password === 'Ecelljalgaon1223@#$') {
       setError('');
       setShowLogin(false);
       setUsername('');
@@ -123,16 +123,6 @@ const Navigation = () => {
                     {item.name}
                   </Link>
                 ))}
-                <button
-                  onClick={handleAdminClick}
-                  className="text-foreground hover:text-accent transition-colors duration-300 font-medium flex items-center gap-2 bg-transparent border-none cursor-pointer"
-                >
-                  <Settings className="w-4 h-4" />
-                  Admin
-                </button>
-                <Link to="/contact" className="btn-primary mt-4" onClick={() => setIsOpen(false)}>
-                  Join E-Cell
-                </Link>
               </div>
             </div>
           )}

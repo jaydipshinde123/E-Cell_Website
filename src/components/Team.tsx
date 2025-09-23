@@ -77,16 +77,6 @@ export default function Team() {
                     <Linkedin className="w-5 h-5" />
                   </a>
                 )}
-                {member.twitter && (
-                  <a
-                    href={member.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    <Twitter className="w-5 h-5" />
-                  </a>
-                )}
                 {member.email && (
                   <a
                     href={`mailto:${member.email}`}
